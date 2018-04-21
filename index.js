@@ -45,7 +45,7 @@ app.post('/sendmail',(req,res) => {
 	  };   
 	  transporter.sendMail(mailOptions, function (err, info) {
 		if(err){
-			res.send('loi');
+			res.send(err);
 			console.log(err);
 		}
 		else{
