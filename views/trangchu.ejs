@@ -12,17 +12,33 @@
 		</a>
 		<br/>
 		<br/>
-		<form action="/postfb" method="post" >
+
+		<form action="/poststtfb" method="post" >
 			<input type="text" name="token" placeholder="Token"> </text>
 			<input type="text" name="content" placeholder="content"> </text>
 			<button type="submit">Send</button>
 		</form>
+		<br/>
+		<br/>
+		<br/>
+		<form action="/postimgfb"
+			enctype="multipart/form-data"
+        	method="post">
+			<input type="text" name="token" placeholder="Token" > </text>
+			<input type="text" name="caption" placeholder="caption"> </text>
+			<INPUT 	 type="file" name="img"><BR>
+			<button type="submit">Send</button>
+		</form>
+		<br/>
+		<br/>
+		<br/>
 		<h1>send email</h1>
 		<br/>
 		<a href="/mail">
 			<button>Gmail</button>
 		<a/>	
 		
+
 
 	</body>
 </html>

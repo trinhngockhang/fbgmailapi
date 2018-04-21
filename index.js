@@ -9,6 +9,30 @@ app.set("view engine","ejs");
 app.set("vỉews","./views");
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 6969;
+const multer = require('multer');
+
+const multerConf = {
+    storage : multer.diskStorage({
+        destination : function(req,file,next){
+            next(null,'upload');
+        },
+    filename: function(req,file,next){
+        const ext = file.mimetype.split('/')[1];
+        next(null,file.fieldname + '-' + Date.now() + '.' + ext);  
+    }    
+    }),
+    fileFilter: function(req,file,next){
+        if(!file){
+            next();
+        }
+        const image = file.mimetype.startsWith('image/');
+        if(image){
+            next(null,true);
+        }else{
+            
+        }
+    }
+}
 
 app.use(bodyParser.json({ extend: true }));
 app.use(bodyParser.urlencoded({ extend: true }));
@@ -56,24 +80,47 @@ app.post('/sendmail',(req,res) => {
 	 });
 })
 
-app.post("/postfb",(req,res) =>{
+app.post("/poststtfb",(req,res) =>{
 	var token;
 	var content;
 	content = req.body.content;
 	token = req.body.token;
 	FB.setAccessToken(token);
-	postFb(content);
+	postSttFb(content);
 	res.send("done");
 })
 
+app.post("/postimgfb",multer(multerConf).single('img'),(req,res)=>{
+	var token;
+	var content = {
+		img : req.file,
+		caption : req.body.caption
+	}
+	token = req.body.token;
+	console.log(content.img);
+	FB.setAccessToken(token);
+	postImgFb(content);	
+	res.send(req.file);
+})
 
-function postFb(content){
+function postSttFb(content){
 	FB.api(
 		'/me/feed',
 		'POST',
 		{"message":content},
 		function(response) {
 		
+		}
+	  );
+}
+
+function postImgFb(content){
+	FB.api(
+		'/me/photos',
+		'POST',
+		{"attached_media":content.img,"caption":content.caption},
+		function(response) {
+			console.log(response);
 		}
 	  );
 }
