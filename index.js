@@ -8,6 +8,7 @@ var FB = require('fb');
 app.set("view engine","ejs");
 app.set("vỉews","./views");
 const bodyParser = require('body-parser');
+const PORT = process.env.PORT || 6969;
 
 app.use(bodyParser.json({ extend: true }));
 app.use(bodyParser.urlencoded({ extend: true }));
@@ -76,6 +77,7 @@ function postFb(content){
 	  );
 }
 
-app.listen(3000,() => {
-	console.log("server start ");
+app.listen(PORT, err => {
+	if (err) throw err;
+	console.log(`Server listening on ${PORT}`);
 });
