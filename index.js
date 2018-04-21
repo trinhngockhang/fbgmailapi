@@ -30,6 +30,7 @@ app.post('/sendmail',(req,res) => {
 	var receivers = req.body.receivers;
 	var content = req.body.content;
 	var transporter = nodemailer.createTransport({
+		host:'https://facebookgmailapi.herokuapp.com',
 		service: 'gmail',
 		auth: {
 			   user: accountSender.user,
