@@ -13,7 +13,7 @@ const multer = require('multer');
 app.use(bodyParser.json({ extend: true }));
 app.use(bodyParser.urlencoded({ extend: true }));
 const mongoose = require('mongoose');
-const connectionString = "mongodb://localhost/fbgmailapi";
+const connectionString = "mongodb://Trinhngockhang1503:khangkhang123@ds213759.mlab.com:13759/fbgmailapi" || "mongodb://localhost/fbgmailapi";
 app.get('/',(req,res) =>{
 	res.render("trangchu.ejs");
 })
