@@ -44,6 +44,20 @@ app.get('/',(req,res) =>{
 
 app.post('/getdata',(req,res) =>{
 	var info = {};
+	token = req.body.token;
+	FB.setAccessToken(token);
+	FB.api(
+		'/me',
+		'GET',
+		{"fields":"name,picture"},
+		function(response) {
+			info.name = response.name;
+			info.ava = response.picture;
+			res.send(info);
+		}
+	  );
+	
+
 })
 
 app.get('/imageupload',(req,res) =>{
