@@ -1,5 +1,3 @@
-
-
 var express = require("express");
 var app = express();
 const fs = require('fs');
@@ -56,8 +54,6 @@ app.post('/getdata',(req,res) =>{
 			res.send(info);
 		}
 	  );
-	
-
 })
 
 app.get('/imageupload',(req,res) =>{
@@ -99,31 +95,27 @@ app.post('/sendmail',(req,res) => {
 			res.send('done');
 			console.log(info);
 		}
-		  
 	 });
 })
 
-app.post("/poststtfb",(req,res) =>{
-	var token;
-	var content;
-	content = req.body.content;
-	token = req.body.token;
-	FB.setAccessToken(token);
-	postSttFb(content);
-	res.send("done");
-})
 
-app.post("/postimgfb",multer(multerConf).single('img'),(req,res)=>{
+app.post("/postfb",multer(multerConf).single('img'),(req,res)=>{
 	var token;
-	var content = {
-		img : "https://facebookgmailapi.herokuapp.com/imageupload?path=" + req.file.filename,
-		caption : req.body.caption
-	}
+	var status = req.body.title +"\n" +req.body.caption;
 	token = req.body.token;
-	console.log(req.file);
 	FB.setAccessToken(token);
-	postImgFb(content);	
-	res.send(req.file);
+	if(req.file){
+		var content = {
+			img : "https://facebookgmailapi.herokuapp.com/imageupload?path=" + req.file.filename,
+			caption : req.body.title +"\n" +req.body.caption
+		}
+		postImgFb(content);	
+		res.send("da up anh");
+	}else{
+		postSttFb(status);
+		res.send("da up stt");
+	}
+	
 })
 
 function postSttFb(content){

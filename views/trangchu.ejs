@@ -12,21 +12,13 @@
 		</a>
 		<br/>
 		<br/>
-
-		<form action="/poststtfb" method="post" >
-			<input type="text" name="token" placeholder="Token"> </text>
-			<input type="text" name="content" placeholder="content"> </text>
-			<button type="submit">Send</button>
-		</form>
 		<br/>
-		<br/>
-		<br/>
-		<h1>2.up stt with img</h1>
-		<form action="/postimgfb"
+		<form action="/postfb"
 			enctype="multipart/form-data"
         	method="post">
 			<input type="text" name="token" placeholder="Token" > </text>
-			<input type="text" name="caption" placeholder="caption"> </text>
+			<input type="text" name="title" placeholder="Title" > </text>
+			<textarea type="text" name="caption" placeholder="Caption"> </textarea>
 			<INPUT 	 type="file" name="img"><BR>
 			<button type="submit">Send</button>
 		</form>
