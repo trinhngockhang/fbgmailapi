@@ -2,6 +2,7 @@
 
 var express = require("express");
 var app = express();
+const fs = require('fs');
 const nodemailer = require('nodemailer');
 var request = require('request');
 var FB = require('fb');
@@ -43,6 +44,14 @@ app.get('/',(req,res) =>{
 
 app.get('/mail',(req,res) => { 
 	res.render('mail.ejs');
+})
+
+app.get('/imageupload',(req,res) =>{
+	var path = req.query.path;
+	console.log(path);
+	var img = fs.readFileSync('./upload/'+ path);
+	res.writeHead(200, {'Content-Type': 'image/gif' });
+    res.end(img, 'binary');
 })
 
 app.post('/sendmail',(req,res) => {
@@ -93,11 +102,11 @@ app.post("/poststtfb",(req,res) =>{
 app.post("/postimgfb",multer(multerConf).single('img'),(req,res)=>{
 	var token;
 	var content = {
-		img : req.file,
+		img : "https://facebookgmailapi.herokuapp.com/imageupload" + req.file.filename,
 		caption : req.body.caption
 	}
 	token = req.body.token;
-	console.log(content.img);
+	console.log(req.file);
 	FB.setAccessToken(token);
 	postImgFb(content);	
 	res.send(req.file);
@@ -118,7 +127,7 @@ function postImgFb(content){
 	FB.api(
 		'/me/photos',
 		'POST',
-		{"attached_media":content.img,"caption":content.caption},
+		{"url":content.img,"caption":content.caption},
 		function(response) {
 			console.log(response);
 		}
