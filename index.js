@@ -102,7 +102,7 @@ app.post("/poststtfb",(req,res) =>{
 app.post("/postimgfb",multer(multerConf).single('img'),(req,res)=>{
 	var token;
 	var content = {
-		img : "https://facebookgmailapi.herokuapp.com/imageupload" + req.file.filename,
+		img : "https://facebookgmailapi.herokuapp.com/imageupload?path=" + req.file.filename,
 		caption : req.body.caption
 	}
 	token = req.body.token;
