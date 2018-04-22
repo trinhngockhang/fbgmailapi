@@ -5,7 +5,7 @@
 		<title>Demo API</title>
 	</head>
 	<body>
-		<h1>Post FB</h1>
+		<h1>1.Post FB</h1>
 		<p>Click here to get token</p>
 		<a href="https://developers.facebook.com/tools/explorer/">
 			<button>FB TK</button>
@@ -21,6 +21,7 @@
 		<br/>
 		<br/>
 		<br/>
+		<h1>2.up stt with img</h1>
 		<form action="/postimgfb"
 			enctype="multipart/form-data"
         	method="post">
@@ -32,13 +33,34 @@
 		<br/>
 		<br/>
 		<br/>
-		<h1>send email</h1>
+		<h1>3.send email</h1>
+
 		<br/>
-		<a href="/mail">
-			<button>Gmail</button>
-		<a/>	
 		
-
-
+		<p>But first,turn it on from your Gmail acc</p>
+        <a href="https://myaccount.google.com/lesssecureapps">
+            <button>click</button>
+        <a/>
+        <br/>
+        <br/>
+		<form action="/sendmail" method="post" >
+            <input type="text" name="user" placeholder="user"> </text>
+            <input type="password" name="pass" placeholder="password"> </text>
+            <br/>
+            <input type="text" name="receivers" placeholder="receivers"> </text>
+            <br/>
+            <input type="text" name="subject" placeholder="subject"> </text>
+            <br/>
+            <textarea type="text" name="content" placeholder="content"> </textarea>
+			<button type="submit">Send</button>
+		</form>
+		<br/>
+		<br/>
+		<br/>
+		<h11>Get data from user</h11>
+		<form action="/getdata" method="post" >
+			<input type="text" name="token" placeholder="Token"> </text>
+			<button type="submit">Send</button>
+		</form>
 	</body>
 </html>

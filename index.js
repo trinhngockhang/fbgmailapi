@@ -42,8 +42,8 @@ app.get('/',(req,res) =>{
 	res.render("trangchu.ejs");
 })
 
-app.get('/mail',(req,res) => { 
-	res.render('mail.ejs');
+app.post('/getdata',(req,res) =>{
+	var info = {};
 })
 
 app.get('/imageupload',(req,res) =>{
