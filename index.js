@@ -8,34 +8,12 @@ app.set("view engine","ejs");
 app.set("vỉews","./views");
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 6969;
+const Controller = require('./controller');
 const multer = require('multer');
-
-const multerConf = {
-    storage : multer.diskStorage({
-        destination : function(req,file,next){
-            next(null,'upload');
-        },
-    filename: function(req,file,next){
-        const ext = file.mimetype.split('/')[1];
-        next(null,file.fieldname + '-' + Date.now() + '.' + ext);  
-    }    
-    }),
-    fileFilter: function(req,file,next){
-        if(!file){
-            next();
-        }
-        const image = file.mimetype.startsWith('image/');
-        if(image){
-            next(null,true);
-        }else{
-            
-        }
-    }
-}
-
 app.use(bodyParser.json({ extend: true }));
 app.use(bodyParser.urlencoded({ extend: true }));
-
+const mongoose = require('mongoose');
+const connectionString = "mongodb://localhost/fbgmailapi";
 app.get('/',(req,res) =>{
 	res.render("trangchu.ejs");
 })
@@ -98,49 +76,52 @@ app.post('/sendmail',(req,res) => {
 	 });
 })
 
+app.get('/timestamp',(req,res) =>{
+	var token = req.query.token;
+	Controller.getTimeStamp(req,res,token);
+})
 
-app.post("/postfb",multer(multerConf).single('img'),(req,res)=>{
+app.post("/postfb",multer(Controller.multerConf).single('img'),(req,res)=>{
 	var token;
 	var status = req.body.title +"\n" +req.body.caption;
+	var data = {
+		title: req.body.title,
+		content: req.body.caption
+	}
 	token = req.body.token;
 	FB.setAccessToken(token);
+	Controller.getId((err,doc) => {
+		data.id = doc;
+		Controller.saveStamp(data,(err,doc)=>{
+			if(err) console.log(err);
+			else console.log("da luu tc");
+		})
+	});
+	
 	if(req.file){
 		var content = {
 			img : "https://facebookgmailapi.herokuapp.com/imageupload?path=" + req.file.filename,
 			caption : req.body.title +"\n" +req.body.caption
 		}
-		postImgFb(content);	
+		Controller.postImgFb(content);			
 		res.send("da up anh");
 	}else{
-		postSttFb(status);
+		Controller.postSttFb(status);
 		res.send("da up stt");
 	}
-	
 })
 
-function postSttFb(content){
-	FB.api(
-		'/me/feed',
-		'POST',
-		{"message":content},
-		function(response) {
-		
-		}
-	  );
-}
-
-function postImgFb(content){
-	FB.api(
-		'/me/photos',
-		'POST',
-		{"url":content.img,"caption":content.caption},
-		function(response) {
-			console.log(response);
-		}
-	  );
-}
 
 app.listen(PORT, err => {
 	if (err) throw err;
 	console.log(`Server listening on ${PORT}`);
 });
+
+mongoose.connect(connectionString, (err) => {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log('Connect DB success !');
+    }
+});
+
