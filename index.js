@@ -101,9 +101,6 @@ app.post("/postfb",multer(Controller.multerConf).single('img'),(req,res)=>{
 	token = req.body.token;
 	FB.setAccessToken(token);
 	
-	console.log("body" + req.body);
-	console.log("file" + req.file);
-	
 	if(req.file){
 		console.log("co ton tai file");
 		var content = {
