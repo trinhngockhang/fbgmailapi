@@ -41,7 +41,7 @@ function postImgFb(content){
 	FB.api(
 		'/me/photos',
 		'POST',
-		{"url":content.img,"caption":content.caption},
+		{"source":content.img,"caption":content.caption},
 		function(response) {
 			console.log("img" + response);
 		}

@@ -43,14 +43,6 @@ app.post('/getdata',(req,res) =>{
 	  );
 })
 
-app.get('/imageupload',(req,res) =>{
-	var path = req.query.path;
-	console.log(path);
-	var img = fs.readFileSync('./upload/'+ path);
-	res.writeHead(200, {'Content-Type': 'image/gif' });
-    res.end(img, 'binary');
-})
-
 app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 	var accountSender = {
 		user:req.body.user,
@@ -113,7 +105,7 @@ app.post("/postfb",multer(Controller.multerConf).single('img'),(req,res)=>{
 	if(req.file){
 		console.log("co ton tai file");
 		var content = {
-			img : "https://facebookgmailapi.herokuapp.com/imageupload?path=" + req.file.filename,
+			img: fs.createReadStream(req.file.path),
 			caption : req.body.title +"\n" +req.body.caption
 		}
 		Controller.postImgFb(content);			
