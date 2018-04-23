@@ -63,7 +63,9 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 		from: accountSender.user, // sender address
 		to: receivers, // list of receivers
 		subject: subject, // Subject line
-		text:content,
+		text:content
+	  };   
+	  if(req.file){
 		attachments:[
 			{
 			  filename: req.file.filename,
@@ -71,7 +73,7 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 			  contentType : req.file.mimetype
 			}
 		  ]
-	  };   
+	  }
 	  transporter.sendMail(mailOptions, function (err, info) {
 		if(err){
 			res.send(err);
