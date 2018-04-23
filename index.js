@@ -95,8 +95,8 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 	 });
 })
 
-app.get('/timestamp',(req,res) =>{
-	var token = req.query.token;
+app.post('/timestamp',(req,res) =>{
+	var token = req.body.token;
 	Controller.getTimeStamp(req,res,token);
 })
 
