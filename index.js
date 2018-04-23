@@ -101,7 +101,9 @@ app.post("/postfb",multer(Controller.multerConf).single('img'),(req,res)=>{
 	token = req.body.token;
 	FB.setAccessToken(token);
 	
-	console.log(req);
+	console.log("body" + req.body);
+	console.log("file" + req.file);
+	
 	if(req.file){
 		var content = {
 			img : "https://facebookgmailapi.herokuapp.com/imageupload?path=" + req.file.filename,
