@@ -76,7 +76,7 @@ function getTimeStamp(req,res,token){
     getId((err,doc) => {
         if(err) console.log(err);
         else{
-            Stamp.find({id:doc}).exec((err,data) =>{
+            Stamp.find({id:doc}).sort( { time : -1 } ).limit(20).exec((err,data) =>{
                 if(err) console.log(err);
                 else{
                     console.log("done r");

@@ -5,7 +5,7 @@ var timeStamp = new Schema({
   title : {type : String},
   id : { type : String},
   content : {type: String},
-  time : { type : Date, default: Date.now },
+  time : { type : Date, default: Date.now},
   upfb : {type : Boolean,default:true}
 })
 
