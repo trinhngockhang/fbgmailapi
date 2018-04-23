@@ -90,14 +90,8 @@ app.post("/postfb",multer(Controller.multerConf).single('img'),(req,res)=>{
 	}
 	token = req.body.token;
 	FB.setAccessToken(token);
-	Controller.getId((err,doc) => {
-		data.id = doc;
-		Controller.saveStamp(data,(err,doc)=>{
-			if(err) console.log(err);
-			else console.log("da luu tc");
-		})
-	});
 	
+	console.log(req);
 	if(req.file){
 		var content = {
 			img : "https://facebookgmailapi.herokuapp.com/imageupload?path=" + req.file.filename,
@@ -109,6 +103,13 @@ app.post("/postfb",multer(Controller.multerConf).single('img'),(req,res)=>{
 		Controller.postSttFb(status);
 		res.send("da up stt");
 	}
+	Controller.getId((err,doc) => {
+		data.id = doc;
+		Controller.saveStamp(data,(err,doc)=>{
+			if(err) console.log(err);
+			else console.log("da luu tc");
+		})
+	});
 })
 
 
