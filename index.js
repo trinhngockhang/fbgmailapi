@@ -14,6 +14,15 @@ app.use(bodyParser.json({ extend: true }));
 app.use(bodyParser.urlencoded({ extend: true }));
 const mongoose = require('mongoose');
 const connectionString = "mongodb://Trinhngockhang1503:khangkhang123@ds213759.mlab.com:13759/fbgmailapi" || "mongodb://localhost/fbgmailapi";
+
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", '*');
+    res.header('Access-Control-Allow-Credentials', 'true')
+    res.header("Access-Control-Allow-Headers", "X-PINGOTHER, Content-Type");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS");
+    next();
+});
+
 app.get('/',(req,res) =>{
 	res.render("trangchu.ejs");
 })
