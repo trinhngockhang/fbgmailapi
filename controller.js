@@ -32,6 +32,7 @@ function postSttFb(content){
 		'POST',
 		{"message":content},
 		function(response) {
+            console.log("stt " + response);
 		}
 	  );
 }
@@ -42,7 +43,7 @@ function postImgFb(content){
 		'POST',
 		{"url":content.img,"caption":content.caption},
 		function(response) {
-			console.log(response);
+			console.log("img" + response);
 		}
 	  );
 }

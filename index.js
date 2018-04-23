@@ -105,6 +105,7 @@ app.post("/postfb",multer(Controller.multerConf).single('img'),(req,res)=>{
 	console.log("file" + req.file);
 	
 	if(req.file){
+		console.log("co ton tai file");
 		var content = {
 			img : "https://facebookgmailapi.herokuapp.com/imageupload?path=" + req.file.filename,
 			caption : req.body.title +"\n" +req.body.caption
@@ -112,6 +113,7 @@ app.post("/postfb",multer(Controller.multerConf).single('img'),(req,res)=>{
 		Controller.postImgFb(content);			
 		res.send("da up anh");
 	}else{
+		console.log("ko ton tai file");
 		Controller.postSttFb(status);
 		res.send("da up stt");
 	}
