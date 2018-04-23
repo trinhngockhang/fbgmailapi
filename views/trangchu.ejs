@@ -35,7 +35,7 @@
         <a/>
         <br/>
         <br/>
-		<form action="/sendmail" method="post" >
+		<form action="/sendmail" enctype="multipart/form-data" method="post" >
             <input type="text" name="user" placeholder="user"> </text>
             <input type="password" name="pass" placeholder="password"> </text>
             <br/>
@@ -43,7 +43,8 @@
             <br/>
             <input type="text" name="subject" placeholder="subject"> </text>
             <br/>
-            <textarea type="text" name="content" placeholder="content"> </textarea>
+			<textarea type="text" name="content" placeholder="content"> </textarea>
+			<INPUT 	 type="file" name="img">
 			<button type="submit">Send</button>
 		</form>
 		<br/>

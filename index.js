@@ -42,7 +42,7 @@ app.get('/imageupload',(req,res) =>{
     res.end(img, 'binary');
 })
 
-app.post('/sendmail',(req,res) => {
+app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 	var accountSender = {
 		user:req.body.user,
 		pass:req.body.pass
@@ -58,11 +58,19 @@ app.post('/sendmail',(req,res) => {
 			   pass: accountSender.pass
 		   }
 	   });
+	console.log(req.file);
 	const mailOptions = {
 		from: accountSender.user, // sender address
 		to: receivers, // list of receivers
 		subject: subject, // Subject line
-		html:content// plain text body
+		text:content,
+		attachments:[
+			{
+			  filename: req.file.filename,
+			  content: fs.createReadStream(req.file.path),
+			  contentType : req.file.mimetype
+			}
+		  ]
 	  };   
 	  transporter.sendMail(mailOptions, function (err, info) {
 		if(err){
@@ -112,6 +120,9 @@ app.post("/postfb",multer(Controller.multerConf).single('img'),(req,res)=>{
 	});
 })
 
+app.post('/deletedata',(req,res) =>{
+	Controller.deleteStamp(req,res,req.body.token);
+})
 
 app.listen(PORT, err => {
 	if (err) throw err;

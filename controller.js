@@ -86,7 +86,24 @@ function getTimeStamp(req,res,token){
     })
 }
 
+function deleteStamp(req,res,token){
+    FB.setAccessToken(token);
+    getId((err,doc) => {
+        if(err) console.log(err);
+        else{
+            Stamp.remove({id:doc}).exec((err,data) =>{
+                if(err) console.log(err);
+                else{
+                    console.log("done r");
+                    res.send('ok');
+                }
+            })
+        }
+    })
+}
+
 module.exports = {
+    deleteStamp,
     getTimeStamp,
     getId,
     postImgFb,
