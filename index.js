@@ -117,7 +117,7 @@ app.post("/postfb",multer(Controller.multerConf).single('img'),(req,res)=>{
 		console.log("file" + req.file);
 		var fileContent = req.file.buffer;
 		var content = {};
-		var filepath = "./public/uploads/" + req.file.originalname;
+		var filepath = "/public/uploads/" + req.file.originalname;
 		fs.writeFile(filepath, new Buffer(fileContent, "base64"), (err) => {
 			if (err) throw err;
 			content = {
