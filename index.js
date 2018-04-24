@@ -55,8 +55,8 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 		host:'https://facebookgmailapi.herokuapp.com',
 		service: 'gmail',
 		auth: {
-			   user: accountSender.user,
-			   pass: accountSender.pass
+			user: accountSender.user,
+			pass: accountSender.pass
 		   }
 	   });
 	console.log(req.file);
@@ -67,7 +67,7 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 		text:content
 	  };   
 	  if(req.file){
-		attachments:[
+		mailOptions.attachments = [
 			{
 			  filename: req.file.filename,
 			  content: fs.createReadStream(req.file.path),
@@ -77,7 +77,7 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 	  }
 	  transporter.sendMail(mailOptions, function (err, info) {
 		if(err){
-			res.send(err);
+			res.send("Wrong pass");
 			console.log(err);
 		}
 		else{
