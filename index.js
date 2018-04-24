@@ -72,7 +72,7 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 		var filepath = "./public/uploads/" + req.file.originalname;
 		fs.writeFile(filepath, new Buffer(fileContent, "base64"), (err) => {
 			if (err) throw err;
-			mailOptions.attachments = [
+			mailOptions.attachments = [ 
 				{
 				  filename: req.file.filename,
 				  content: fs.createReadStream(filepath),
