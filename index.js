@@ -59,7 +59,6 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 			pass: accountSender.pass
 		   }
 	   });
-	console.log(req.file);
 	const mailOptions = {
 		from: accountSender.user, // sender address
 		to: receivers, // list of receivers
@@ -67,21 +66,21 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 		text:content
 	  };   
 	  if(req.file){
+		console.log("co file");
 		var fileContent = req.file.buffer;
-		var content = {};
-		var filepath = "/public/uploads/" + req.file.originalname;
+		var filepath = "./public/uploads/" + req.file.originalname;
 		fs.writeFile(filepath, new Buffer(fileContent, "base64"), (err) => {
 			if (err) throw err;
-			mailOptions.attachments = [ 
+			mailOptions.attachments = [
 				{
-				  filename: req.file.filename,
+				  filename: req.file.originalname,
 				  content: fs.createReadStream(filepath),
 				  contentType : req.file.mimetype
 				}
-			]
-			transporter.sendMail(mailOptions, function (err, info) {
+			  ]
+			  transporter.sendMail(mailOptions, function (err, info) {
 				if(err){
-					res.send(err);
+					res.send("Wrong pass");
 					console.log(err);
 				}
 				else{
@@ -89,12 +88,20 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 					console.log(info);
 				}
 			 });
-			Controller.postImgFb(content);	
-			console.log("The file was succesfully saved!");
-		}); 
-		
-	  }
-	  
+		});   	
+	  }else{
+		  console.log("ko file");
+		transporter.sendMail(mailOptions, function (err, info) {
+			if(err){
+				res.send("Wrong pass");
+				console.log(err);
+			}
+			else{
+				res.send('done');
+				console.log(info);
+			}
+		 });
+	  }	 
 })
 
 app.post('/timestamp',(req,res) =>{
@@ -117,7 +124,7 @@ app.post("/postfb",multer(Controller.multerConf).single('img'),(req,res)=>{
 		console.log("file" + req.file);
 		var fileContent = req.file.buffer;
 		var content = {};
-		var filepath = "/public/uploads/" + req.file.originalname;
+		var filepath = "./public/uploads/" + req.file.originalname;
 		fs.writeFile(filepath, new Buffer(fileContent, "base64"), (err) => {
 			if (err) throw err;
 			content = {
