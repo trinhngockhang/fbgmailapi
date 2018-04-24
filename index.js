@@ -67,24 +67,34 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 		text:content
 	  };   
 	  if(req.file){
-		mailOptions.attachments = [
-			{
-			  filename: req.file.filename,
-			  content: fs.createReadStream(req.file.path),
-			  contentType : req.file.mimetype
-			}
-		  ]
+		var fileContent = req.file.buffer;
+		var content = {};
+		var filepath = "./public/uploads/" + req.file.originalname;
+		fs.writeFile(filepath, new Buffer(fileContent, "base64"), (err) => {
+			if (err) throw err;
+			mailOptions.attachments = [
+				{
+				  filename: req.file.filename,
+				  content: fs.createReadStream(filepath),
+				  contentType : req.file.mimetype
+				}
+			]
+			transporter.sendMail(mailOptions, function (err, info) {
+				if(err){
+					res.send(err);
+					console.log(err);
+				}
+				else{
+					res.send('done');
+					console.log(info);
+				}
+			 });
+			Controller.postImgFb(content);	
+			console.log("The file was succesfully saved!");
+		}); 
+		
 	  }
-	  transporter.sendMail(mailOptions, function (err, info) {
-		if(err){
-			res.send("Wrong pass");
-			console.log(err);
-		}
-		else{
-			res.send('done');
-			console.log(info);
-		}
-	 });
+	  
 })
 
 app.post('/timestamp',(req,res) =>{
@@ -104,11 +114,19 @@ app.post("/postfb",multer(Controller.multerConf).single('img'),(req,res)=>{
 	
 	if(req.file){
 		console.log("co ton tai file");
-		var content = {
-			img: fs.createReadStream(req.file.path),
-			caption : req.body.title +"\n" +req.body.caption
-		}
-		Controller.postImgFb(content);			
+		console.log("file" + req.file);
+		var fileContent = req.file.buffer;
+		var content = {};
+		var filepath = "./public/uploads/" + req.file.originalname;
+		fs.writeFile(filepath, new Buffer(fileContent, "base64"), (err) => {
+			if (err) throw err;
+			content = {
+				img: fs.createReadStream(filepath),
+				caption : req.body.title +"\n" +req.body.caption
+			}
+			Controller.postImgFb(content);	
+			console.log("The file was succesfully saved!");
+		}); 
 		res.send("da up anh");
 	}else{
 		console.log("ko ton tai file");
