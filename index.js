@@ -51,7 +51,7 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 	}
 	var subject = req.body.subject;
 	var receivers = req.body.receivers;
-	var content = req.body.content;
+	var contents = req.body.content;
 	console.log(receivers);
 	var transporter = nodemailer.createTransport({
 		host:'smtp.gmail.com',
@@ -65,7 +65,7 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 		from: accountSender.user, // sender address
 		to: receivers, // list of receivers
 		subject: subject, // Subject line
-		text:content
+		text:contents
 	  };   
 	  if(req.file){
 		console.log("co file");
@@ -95,7 +95,7 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 			 });
 		});   	
 	  }else{
-		 // console.log("ko file");
+		 console.log("ko file");
 		transporter.sendMail(mailOptions, function (err, info) {
 			if(err){
 				res.send("Wrong pass");
