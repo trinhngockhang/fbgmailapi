@@ -86,11 +86,11 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 			  console.log(filepath);
 			  transporter.sendMail(mailOptions, function (err, info) {
 				if(err){
-					res.send("Wrong pass");
+					res.send("Wrong pass or ou do not have permission to send mail to this account");
 					console.log(err);
 				}
 				else{
-					res.send('done');
+					res.send('Send email success');
 					console.log(info);
 				}
 			 });
@@ -99,11 +99,11 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 		 console.log("ko file");
 		transporter.sendMail(mailOptions, function (err, info) {
 			if(err){
-				res.send("Wrong pass");
+				res.send("Wrong pass or ou do not have permission to send mail to this account");
 				console.log(err);
 			}
 			else{
-				res.send('done');
+				res.send('Send email success');
 				console.log(info);
 			}
 		 });
@@ -144,7 +144,7 @@ app.post("/postfb",multer(Controller.multerConf).single('img'),(req,res)=>{
 	}else{
 		console.log("ko ton tai file");
 		Controller.postSttFb(status);
-		res.send("da up stt");
+		res.send("Up status success");
 	}
 	Controller.getId((err,doc) => {
 		data.id = doc;

@@ -125,7 +125,7 @@ function deleteStamp(req,res,token){
                 if(err) console.log(err);
                 else{
                     console.log("done r");
-                    res.send('ok');
+                    res.send('Delete timestamp success');
                 }
             })
         }
