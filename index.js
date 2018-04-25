@@ -52,6 +52,7 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 	var subject = req.body.subject;
 	var receivers = req.body.receivers;
 	var content = req.body.content;
+	console.log(receivers);
 	var transporter = nodemailer.createTransport({
 		host:'smtp.gmail.com',
 		service: 'gmail',
