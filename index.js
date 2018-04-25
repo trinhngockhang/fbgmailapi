@@ -73,11 +73,7 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 		var filepath = "./public/uploads/" + req.file.originalname;
 		console.log(req.file);
 		fs.writeFile(filepath, new Buffer(fileContent, "base64"), (err) => {
-			if (err){
-				res.send(err);
-				console.log("lỗi create file");
-				console.log(err);
-			}
+			if (err) throw err;
 			console.log("create file sc");
 			mailOptions.attachments = [
 				{
