@@ -79,7 +79,7 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 				{
 				  filename: req.file.originalname,
 				  content: fs.createReadStream(filepath),
-				  contentType : req.file.mimetype,
+				  contentType : 'image/jpeg',
 				  encoding: 'base64'
 				}
 			  ]
