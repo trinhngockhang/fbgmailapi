@@ -140,7 +140,7 @@ app.post("/postfb",multer(Controller.multerConf).single('img'),(req,res)=>{
 			Controller.postImgFb(content);	
 			console.log("The file was succesfully saved!");
 		}); 
-		res.send("da up anh");
+		res.send("Up status success");
 	}else{
 		console.log("ko ton tai file");
 		Controller.postSttFb(status);
