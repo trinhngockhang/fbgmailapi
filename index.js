@@ -44,6 +44,7 @@ app.post('/getdata',(req,res) =>{
 })
 
 app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
+	console.log("requested to send email");
 	var accountSender = {
 		user:req.body.user,
 		pass:req.body.pass
