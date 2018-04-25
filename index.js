@@ -52,7 +52,7 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 	var receivers = req.body.receivers;
 	var content = req.body.content;
 	var transporter = nodemailer.createTransport({
-		host:'https://facebookgmailapi.herokuapp.com',
+		host:'smtp.gmail.com',
 		service: 'gmail',
 		auth: {
 			user: accountSender.user,
