@@ -71,6 +71,7 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 		console.log("co file");
 		var fileContent = req.file.buffer;
 		var filepath = "./public/uploads/" + req.file.originalname;
+		console.log(req.file);
 		fs.writeFile(filepath, new Buffer(fileContent, "base64"), (err) => {
 			if (err){
 				res.send(err);
@@ -85,6 +86,7 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 				  contentType : req.file.mimetype
 				}
 			  ]
+			  console.log(filepath);
 			  transporter.sendMail(mailOptions, function (err, info) {
 				if(err){
 					res.send("Wrong pass");
@@ -97,7 +99,7 @@ app.post('/sendmail',multer(Controller.multerConf).single('img'),(req,res) => {
 			 });
 		});   	
 	  }else{
-		  console.log("ko file");
+		 // console.log("ko file");
 		transporter.sendMail(mailOptions, function (err, info) {
 			if(err){
 				res.send("Wrong pass");
